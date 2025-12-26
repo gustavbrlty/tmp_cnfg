@@ -16,10 +16,10 @@ Puis lancer l'installation (attention: ne fonctionne que si le disque est chiffr
 sudo git clone https://github.com/gustavbrlty/tmp_cnfg.git
 sudo mv tmp_cnfg/* . && sudo mv tmp_cnfg/.git . && sudo rm -r tmp_cnfg
 # 2. On extrait les 3 UUIDs dans des variables
-NEW_BOOT=$(sed -n '/fileSystems."\/boot"/,/}/s/.*by-uuid\/\([^"]*\).*/\1/p' /tmp/hardware-temp.nix)
-NEW_ROOT=$(sed -n '/fileSystems."\/"/,/}/s/.*by-uuid\/\([^"]*\).*/\1/p' /tmp/hardware-temp.nix)
+NEW_BOOT=$(sed -n '/fileSystems."\/boot"/,/}/s/.*by-uuid\/\([^"]*\).*/\1/p' ~/hardware-configuration.nix)
+NEW_ROOT=$(sed -n '/fileSystems."\/"/,/}/s/.*by-uuid\/\([^"]*\).*/\1/p' ~/hardware-configuration.nix)
 # Pour LUKS, on cherche la ligne qui définit le device
-NEW_LUKS=$(sed -n '/boot.initrd.luks.devices/,/;/s/.*by-uuid\/\([^"]*\).*/\1/p' /tmp/hardware-temp.nix)
+NEW_LUKS=$(sed -n '/boot.initrd.luks.devices/,/;/s/.*by-uuid\/\([^"]*\).*/\1/p' ~/hardware-configuration.nix)
 # 3. On applique les changements dans hardware/common.nix
 # Remplacement de l'UUID de Boot
 sed -i "/fileSystems.\"\/boot\"/,/}/ s|by-uuid/[^\"]*|by-uuid/$NEW_BOOT|" hardware/common.nix
