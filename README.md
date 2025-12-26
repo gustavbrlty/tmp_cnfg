@@ -17,7 +17,17 @@ sudo git clone https://github.com/gustavbrlty/tmp_cnfg.git
 sudo mv tmp_cnfg/* . && sudo mv tmp_cnfg/.git . && sudo rm -r tmp_cnfg
 # 2. On extrait les 3 UUIDs dans des variables
 NEW_BOOT=$(sed -n '/fileSystems."\/boot"/,/}/s/.*by-uuid\/\([^"]*\).*/\1/p' ~/hardware-configuration.nix)
-NEW_ROOT=$(sed -n '/fileSystems."\/"/,/}/s/.*by-uuid\/\([^"]*\).*/\1/p' ~/hardware-configuration.nix)
+# 1. On extrait l'UUID en regardant les 5 lignes qui suivent la définition de "/"
+NEW_ROOT=$(grep -A 5 'fileSystems."/"' /tmp/hardware-temp.nix | grep "by-uuid" | head -n 1 | sed -E 's/.*by-uuid\/([^"; ]+).*/\1/')
+# 2. Vérification
+echo "UUID ROOT trouvé : '$NEW_ROOT'"
+# 3. Si ce n'est pas vide, on applique
+if [ -n "$NEW_ROOT" ]; then
+    sed -i "/fileSystems.\"\/\"/,/}/ s|by-uuid/[^\"]*|by-uuid/$NEW_ROOT|" hardware/common.nix
+    echo "common.nix mis à jour pour ROOT."
+else
+    echo "Echec : Je n'ai pas trouvé l'UUID automatiquement. Faites-le manuellement."
+fi
 # Pour LUKS, on cherche la ligne qui définit le device
 NEW_LUKS=$(grep "boot.initrd.luks.devices" ~/hardware-configuration.nix | sed -E 's/.*by-uuid\/([^";]+).*/\1/')
 # 3. On applique les changements dans hardware/common.nix
