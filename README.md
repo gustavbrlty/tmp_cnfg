@@ -18,6 +18,7 @@ sudo mv tmp_cnfg/* . && sudo mv tmp_cnfg/.git . && sudo rm -r tmp_cnfg
 # 2. On extrait les 3 UUIDs dans des variables
 NEW_BOOT=$(sed -n '/fileSystems."\/boot"/,/}/s/.*by-uuid\/\([^"]*\).*/\1/p' ~/hardware-configuration.nix)
 # 1. On extrait l'UUID en regardant les 5 lignes qui suivent la définition de "/"
+TARGET_MNT=$(mount | grep " on /mnt " > /dev/null && echo "/mnt" || echo "/")
 NEW_ROOT=$(lsblk -no UUID,MOUNTPOINT | grep " ${TARGET_MNT}$" | awk '{print $1}')
 # Pour LUKS, on cherche la ligne qui définit le device
 NEW_LUKS=$(grep "boot.initrd.luks.devices" ~/hardware-configuration.nix | sed -E 's/.*by-uuid\/([^";]+).*/\1/')
