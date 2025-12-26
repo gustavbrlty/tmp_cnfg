@@ -3,6 +3,8 @@ Pour afficher ce README:
 curl https://raw.githubusercontent.com/gustavbrlty/tmp_cnfg/refs/heads/main/README.md
 ```
 
+Attention: ne fonctionne que si le disque est chiffré.
+
 Première étape, préparer l'installation:
 ```sh
 cd /etc/nixos
