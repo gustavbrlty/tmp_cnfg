@@ -9,12 +9,12 @@ cd /etc/nixos
 sudo mv hardware-configuration.nix ~
 sudo mv configuration.nix ~
 nix-shell -p git
-sudo git clone https://github.com/gustavbrlty/tmp_cnfg.git
-cat README.md
 ```
 
 Puis lancer l'installation:
 ```sh
+sudo git clone https://github.com/gustavbrlty/tmp_cnfg.git
+cat README.md
 # Récupération des UUIDs
 NEW_ROOT=$(sed -n '/fileSystems."\/"/,/}/s/.*by-uuid\/\([^"]*\).*/\1/p' hardware-configuration.nix) && \
 NEW_BOOT=$(sed -n '/fileSystems."\/boot"/,/}/s/.*by-uuid\/\([^"]*\).*/\1/p' hardware-configuration.nix) && \
