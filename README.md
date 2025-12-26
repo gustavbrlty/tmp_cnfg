@@ -18,7 +18,7 @@ sudo mv tmp_cnfg/* . && sudo mv tmp_cnfg/.git . && sudo rm -r tmp_cnfg
 # 2. On extrait les 3 UUIDs dans des variables
 NEW_BOOT=$(sed -n '/fileSystems."\/boot"/,/}/s/.*by-uuid\/\([^"]*\).*/\1/p' ~/hardware-configuration.nix)
 # 1. On extrait l'UUID en regardant les 5 lignes qui suivent la définition de "/"
-NEW_ROOT=$(echo "$CONF" | grep -A 5 'fileSystems."/"' | grep "by-uuid" | head -n 1 | sed -E 's/.*by-uuid\/([^"; ]+).*/\1/')
+NEW_ROOT=$(cat ~/hardware-configuration.nix | grep -A 5 'fileSystems."/"' | grep "by-uuid" | head -n 1 | sed -E 's/.*by-uuid\/([^"; ]+).*/\1/')
 # Pour LUKS, on cherche la ligne qui définit le device
 NEW_LUKS=$(grep "boot.initrd.luks.devices" ~/hardware-configuration.nix | sed -E 's/.*by-uuid\/([^";]+).*/\1/')
 # 3. On applique les changements dans hardware/common.nix
