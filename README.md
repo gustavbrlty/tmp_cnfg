@@ -25,6 +25,7 @@ sudo nixos-rebuild switch --flake /etc/nixos#default
 ```
 Ensuite s'il n'y a pas eu d'erreur:
 ```sh
+exit
 sudo rm ~/configuration.nix ~/hardware-configuration.nix
 cd ~
 ```
