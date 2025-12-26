@@ -1,4 +1,4 @@
-Pour afficher ce README: 
+Pour afficher ce README:
 ```sh
 curl https://raw.githubusercontent.com/gustavbrlty/tmp_cnfg/refs/heads/main/README.md
 ```
