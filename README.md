@@ -3,8 +3,6 @@ Pour afficher ce README:
 curl https://raw.githubusercontent.com/gustavbrlty/tmp_cnfg/refs/heads/main/README.md
 ```
 
-Attention: ne fonctionne que si le disque est chiffré.
-
 Première étape, préparer l'installation:
 ```sh
 cd /etc/nixos
@@ -13,7 +11,7 @@ sudo mv configuration.nix ~
 nix-shell -p git
 ```
 
-Puis lancer l'installation:
+Puis lancer l'installation (attention: ne fonctionne que si le disque est chiffré):
 ```sh
 sudo git clone https://github.com/gustavbrlty/tmp_cnfg.git
 sudo mv tmp_cnfg/* . && sudo mv tmp_cnfg/.git . && sudo rm -r tmp_cnfg
