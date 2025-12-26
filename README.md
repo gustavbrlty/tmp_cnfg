@@ -1,3 +1,8 @@
+Pour afficher ce README: 
+```sh
+curl https://raw.githubusercontent.com/gustavbrlty/tmp_cnfg/refs/heads/main/README.md
+```
+
 Première étape, préparer l'installation:
 ```sh
 cd /etc/nixos
