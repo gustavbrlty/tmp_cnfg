@@ -17,3 +17,7 @@ sudo git add *
 sudo git config --global --add safe.directory /etc/nixos
 sudo nixos-rebuild switch --flake /etc/nixos#default
 ```
+Puis si tout c'est bien passé:
+```sh
+sudo rm ~/configuration.nix ~/hardware-configuration.nix
+```
