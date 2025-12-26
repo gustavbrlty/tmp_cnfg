@@ -24,18 +24,18 @@ NEW_ROOT=$(lsblk -no UUID,MOUNTPOINT | grep " ${TARGET_MNT}$" | awk '{print $1}'
 NEW_LUKS=$(grep "boot.initrd.luks.devices" ~/hardware-configuration.nix | sed -E 's/.*by-uuid\/([^";]+).*/\1/')
 # 3. On applique les changements dans hardware/common.nix
 # Remplacement de l'UUID de Boot
-sed -i "/fileSystems.\"\/boot\"/,/}/ s|by-uuid/[^\"]*|by-uuid/$NEW_BOOT|" hardware/common.nix
+sudo sed -i "/fileSystems.\"\/boot\"/,/}/ s|by-uuid/[^\"]*|by-uuid/$NEW_BOOT|" hardware/common.nix
 # Remplacement de l'UUID de Root (Système de fichier interne)
-sed -i "/fileSystems.\"\/\"/,/}/ s|by-uuid/[^\"]*|by-uuid/$NEW_ROOT|" hardware/common.nix
+sudo sed -i "/fileSystems.\"\/\"/,/}/ s|by-uuid/[^\"]*|by-uuid/$NEW_ROOT|" hardware/common.nix
 # Remplacement de la ligne LUKS complète (Conteneur externe)
 # On remplace toute la ligne commençant par boot.initrd.luks pour mettre le bon format et le bon UUID
-sed -i "s|^.*boot.initrd.luks.devices.*|  boot.initrd.luks.devices.\"luks-$NEW_LUKS\".device = \"/dev/disk/by-uuid/$NEW_LUKS\";|" hardware/common.nix
+sudo sed -i "s|^.*boot.initrd.luks.devices.*|  boot.initrd.luks.devices.\"luks-$NEW_LUKS\".device = \"/dev/disk/by-uuid/$NEW_LUKS\";|" hardware/common.nix
 # 4. Vérification visuelle
 echo "--- Vérification des UUIDs ---"
 echo "BOOT: $NEW_BOOT"
 echo "ROOT: $NEW_ROOT"
 echo "LUKS: $NEW_LUKS"
-grep -E "by-uuid|luks-" hardware/common.nix
+sudo grep -E "by-uuid|luks-" hardware/common.nix
 sudo nixos-rebuild switch --flake /etc/nixos#default
 ```
 Ensuite s'il n'y a pas eu d'erreur:
