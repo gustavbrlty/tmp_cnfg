@@ -9,7 +9,6 @@
     [ # Include the results of the hardware scan.
       hardware/common.nix
       hardware/pc_HP.nix
-      modules/network.nix
       inputs.home-manager.nixosModules.default
     ];
   
